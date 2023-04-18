@@ -1,4 +1,4 @@
-import { ILoginParams, ILoginValidation } from '../../models/auth';
+import { ILoginParams, ILoginValidation, ISignUpParams, ISignUpValidation } from '../../models/auth';
 import { validEmailRegex } from '../../utils';
 
 const validateEmail = (email: string) => {
@@ -35,3 +35,52 @@ export const validateLogin = (values: ILoginParams): ILoginValidation => {
 export const validLogin = (values: ILoginValidation) => {
   return !values.email && !values.password;
 };
+
+export const validateRepeatPassword = (password: string, reapeatPassword: string) => {
+  if (!reapeatPassword) {
+    return 'passwordRequire';
+  }
+
+  if (password != reapeatPassword) {
+    return 'matchPasswordInvalid';
+  }
+
+  return '';
+}
+
+const validateField = (field: string, value: string) => {
+  if (value) return '';
+  let fieldRequire = '';
+  switch (field) {
+    case 'name':
+      fieldRequire = 'nameRequire';
+      break;
+
+    case 'gender':
+      fieldRequire = 'genderRequire';
+      break;
+    case 'region':
+      fieldRequire = 'regionRequire';
+      break;
+    case 'state':
+      fieldRequire = 'stateRequire';
+      break;
+  }
+  return fieldRequire;
+}
+
+export const validateSignUp = (values: ISignUpParams): ISignUpValidation => {
+  return {
+    email: validateEmail(values.email),
+    password: validatePassword(values.password),
+    repeatPassword: validateRepeatPassword(values.password, values.repeatPassword),
+    name: validateField('name', values.name),
+    gender: validateField('gender', values.gender),
+    region: validateField('region', values.region),
+    state: validateField('state', values.state)
+  };
+};
+
+export const validSignUp = (values: ISignUpValidation) => {
+  return !values.email && !values.password && !values.repeatPassword && !values.name && !values.gender && !values.region && !values.state;
+}
