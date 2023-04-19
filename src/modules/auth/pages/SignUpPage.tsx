@@ -117,7 +117,7 @@ const SignUpPage = () => {
                 errorMessage={errorMessage}
                 locations={locations}
                 states={states}
-                onChangeRegion={onChangeRegion}
+                // onChangeRegion={onChangeRegion}
             />
             <ToastContainer />
         </div>
