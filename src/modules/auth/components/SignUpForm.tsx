@@ -5,6 +5,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { ISignUpParams, ILocationParams, ISignUpValidation } from '../../../models/auth';
 import { GENDER } from "../../intl/constants"
 import { values } from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { Select } from 'antd';
 
 interface Props {
     onSignUp(values: ISignUpParams): void;
@@ -20,7 +22,7 @@ const SingupForm = (props: Props) => {
     const { onSignUp, loading, errorMessage, locations, states, onChangeRegion } = props;
     // console.log(states)
     // console.log(locations)
-    
+
     const { control, handleSubmit } = useForm({
         defaultValues: {
             email: '',
@@ -64,6 +66,14 @@ const SingupForm = (props: Props) => {
 
     }
 
+    const { t } = useTranslation();
+    const { i18n } = useTranslation();
+
+    const handleChange = (value: any) => {
+        i18n.changeLanguage(value);
+    }
+
+    const { Option } = Select;
     // console.log(formValues)
     return (
         <div
@@ -76,6 +86,10 @@ const SingupForm = (props: Props) => {
                 flexDirection: 'column',
             }}
         >
+            <Select defaultValue="vi" style={{ width: 120 }} onChange={handleChange} >
+                <Option value="en">Eng</Option>
+                <Option value="vi">Vi</Option>
+            </Select>
 
 
             <form
@@ -98,7 +112,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputEmail" className="form-label">
-                                <FormattedMessage id="email" />
+                                <FormattedMessage id={t('email')} />
                             </label>
                             <input
                                 {...field}
@@ -133,7 +147,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputPassword" className="form-label">
-                                <FormattedMessage id="password" />
+                                <FormattedMessage id={t('password')} />
                             </label>
                             <input {...field}
                                 type="password"
@@ -167,7 +181,7 @@ const SingupForm = (props: Props) => {
                         },
                         required: "This repeat password is required.",
                         validate: (val: string) => {
-                     
+
                             if (val !== formValues.password) {
                                 return "Your passwords do no match";
                             }
@@ -176,7 +190,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputPassword" className="form-label">
-                                <FormattedMessage id="Xác nhập lại mật khẩu" />
+                                <FormattedMessage id={t('repeatPassword')} />
                             </label>
                             <input {...field}
                                 type="password"
@@ -224,7 +238,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputPassword" className="form-label">
-                                <FormattedMessage id="name" />
+                                <FormattedMessage id={t('Name')} />
                             </label>
                             <input {...field}
                                 type="text"
@@ -252,7 +266,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputPassword" className="form-label">
-                                <FormattedMessage id="gender" />
+                                <FormattedMessage id={t('gender')} />
                             </label>
                             <select
                                 onChange={(e) => {
@@ -284,7 +298,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputPassword" className="form-label">
-                                <FormattedMessage id="region" />
+                                <FormattedMessage id={t('region')} />
                             </label>
                             <select
                                 onChange={(e) => {
@@ -292,7 +306,7 @@ const SingupForm = (props: Props) => {
                                     // console.log( "region", typeof nameRegion);
                                     onChangeRegion(e.target.value)
                                     field.onChange(e);
-                                    setFormValues({ ...formValues, region: nameRegion  })
+                                    setFormValues({ ...formValues, region: nameRegion })
                                 }}
                                 className="form-select"
                                 name="region"
@@ -319,7 +333,7 @@ const SingupForm = (props: Props) => {
                     render={({ field, fieldState: { error } }) => (
                         <div className="col-md-12">
                             <label htmlFor="inputPassword" className="form-label">
-                                <FormattedMessage id="Thành Phố" />
+                                <FormattedMessage id={t('city')} />
                             </label>
                             <select
                                 onChange={(e) => {
@@ -353,7 +367,7 @@ const SingupForm = (props: Props) => {
                             value="Đăng Nhập"
                         >
                             {loading && <div className="spinner-border spinner-border-sm text-light mr-2" role="status" />}
-                            <FormattedMessage id="register" />
+                            <FormattedMessage id={t('register')} />
 
 
                         </button>

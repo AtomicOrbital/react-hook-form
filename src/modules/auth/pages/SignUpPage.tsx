@@ -55,14 +55,15 @@ const SignUpPage = () => {
         console.log(json)
         if (json.trim() === "OK") {
             toast.success("SingUp user sucess!", {
-                autoClose: 2000,
+                autoClose: 3000,
             })
         } else {
             toast.error(json, {
-                autoClose: 1000,
+                autoClose: 3000,
             })
         }
     }
+
     const onSignUp = React.useCallback(
         async (values: ISignUpParams) => {
             setErrorMessage('');
@@ -71,26 +72,31 @@ const SignUpPage = () => {
             const json = await dispatch(
                 fetchThunk(API_PATHS.signUp, 'post', values),
             );
+            // console.log("json", json);
 
             setLoading(false);
 
             if (json?.code === RESPONSE_STATUS_SUCCESS) {
                 dispatch(setUserInfo(json.data));
-                console.log(json)
+                
+
                 // Cookies.set(ACCESS_TOKEN_KEY, json.data.token, { expires: values.rememberMe ? 7 : undefined });
-                toastMessage(json.message);
+                await toastMessage(json.message);
+
                 dispatch(replace(ROUTES.home));
                 return;
+            } else {
+                toastMessage(json.message)
             }
 
-            setErrorMessage(getErrorMessageResponse(json));
+            // setErrorMessage(getErrorMessageResponse(json));
         },
         [dispatch],
     );
 
-    const onChangeRegion = (idRegion: string) => {
-        setIdRegion(idRegion);
-    };
+    // const onChangeRegion = (idRegion: string) => {
+    //     setIdRegion(idRegion);
+    // };
 
     return (
         <div
