@@ -94,9 +94,9 @@ const SignUpPage = () => {
         [dispatch],
     );
 
-    // const onChangeRegion = (idRegion: string) => {
-    //     setIdRegion(idRegion);
-    // };
+    const onChangeRegion = (idRegion: string) => {
+        setIdRegion(idRegion);
+    };
 
     return (
         <div
