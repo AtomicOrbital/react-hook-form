@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchPhotos,
@@ -123,4 +123,4 @@ function ConfirmCard() {
   );
 }
 
-export default ConfirmCard;
+export default memo(ConfirmCard);
