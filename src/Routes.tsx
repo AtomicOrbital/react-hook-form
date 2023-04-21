@@ -4,6 +4,7 @@ import { ROUTES } from './configs/routes';
 import ProtectedRoute from './modules/common/components/ProtectedRoute';
 import LoginPageV2 from './modules/auth/pages/LoginPageV2';
 import SignUpPage from './modules/auth/pages/SignUpPage';
+import ConfirmCard from './modules/auth/components/ConfirmCard';
 
 const HomePage = lazy(() => import('./modules/home/pages/HomePage'));
 const ContactPage = lazy(() => import('./modules/home/pages/ContactPage'));
@@ -21,7 +22,7 @@ export const Routes = (props: Props) => {
         <ProtectedRoute path={ROUTES.home} component={HomePage} />
         <Route path={ROUTES.contact} component={ContactPage} />
         <Route path={ROUTES.signup} component={SignUpPage} />
-
+        <Route path={ROUTES.card} component={ConfirmCard} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </Suspense>

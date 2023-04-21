@@ -3,5 +3,6 @@ export const ROUTES = {
   contact: '/contact',
   login: '/login',
   loginV2: '/loginv2',
-  signup: '/signup'
+  signup: '/signup',
+  card: '/card'
 };
