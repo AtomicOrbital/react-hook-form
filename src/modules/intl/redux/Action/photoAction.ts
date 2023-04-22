@@ -4,9 +4,10 @@ import {
     FETCH_PHOTOS_FAILURE,
     UPDATE_PHOTO_TITLES,
     RESET_PHOTO_TITLES,
+    PhotoActionTypes,
 } from "../Types/photoCardType";
 import axios from "axios";
-import { PhotoActionTypes } from "../photoReducer";
+
 
 export interface Photo {
     albumId: number;
@@ -43,14 +44,6 @@ export interface ResetPhotoTitlesAction {
     type: typeof RESET_PHOTO_TITLES;
 }
 
-// interface PhotoState {
-//     photos: Photo[];
-//     loading: boolean;
-//     error: string | null;
-// }
-
-// export type PhotoActionTypes =| FetchPhotosRequestAction| FetchPhotosSuccessAction| FetchPhotosFailureAction| UpdatePhotoTitlesAction| ResetPhotoTitlesAction;
-
 export const fetchPhotosRequest = ():PhotoActionTypes => {
     return {
         type: FETCH_PHOTOS_REQUEST,
@@ -70,6 +63,8 @@ export const fetchPhotosFailure = (error: string):PhotoActionTypes => {
         payload: error,
     };
 };
+
+
 
 export const fetchPhotos = () => {
     return (dispatch: any) => {

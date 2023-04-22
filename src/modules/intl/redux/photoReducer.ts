@@ -11,20 +11,20 @@ const initialState = {
   photos: [],
   loading: false,
   error: null,
+  currentPage: 1,
+  itemsPage: 10,
+
 };
 
 export interface PhotoState {
-  photos: Photo[];
+  photos: [];
   loading: boolean;
   error: string | null;
+  currentPage: number;
+  itemsPage: number
 }
 
-export type PhotoActionTypes = 
-  | FetchPhotosRequestAction
-  | FetchPhotosSuccessAction
-  | FetchPhotosFailureAction
-  | UpdatePhotoTitlesAction
-  | ResetPhotoTitlesAction;
+
 
 
 const photoReducer = (state = initialState, action: any) => {
@@ -48,9 +48,10 @@ const photoReducer = (state = initialState, action: any) => {
       });
       return { ...state, photos: updatedPhotos };
     case RESET_PHOTO_TITLES:
-      console.log("action", action.payload)
+      console.log("action", action.payload);
       state.photos = action.payload
       return { ...state, photos: action.payload };
+
     default:
       return state;
   }

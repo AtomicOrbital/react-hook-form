@@ -17,25 +17,25 @@ function ConfirmCard() {
   const [updatedTitles, setUpdatedTitles] = useState<UpdatedTitles>({});
   const [editable, setEditable] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+
+  const itemsPage = 10;
 
   useEffect(() => {
     dispatch(fetchPhotos());
   }, [dispatch]);
 
+  
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const globalIndex = (currentPage - 1) * itemsPage + index;
     setUpdatedTitles({
       ...updatedTitles,
-      [index]: event.target.value,
+      [globalIndex]: event.target.value,
     });
+    console.log("e", event.target.value);
   };
 
   const handleEditClick = (index: number) => {
     setEditable(index);
-  };
-
-  const handleBlur = () => {
-    setEditable(null);
   };
 
   const handleConfirmUpdate = () => {
@@ -55,16 +55,17 @@ function ConfirmCard() {
     setEditable(null);
   };
 
-  const totalPages = Math.ceil(photos.length / itemsPerPage);
+  const totalPages = Math.ceil(photos.length / itemsPage);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
+
     }
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPage;
   const currentItems = photos.slice(indexOfFirstItem, indexOfLastItem);
 
   const Pagination = () => {
@@ -143,10 +144,9 @@ function ConfirmCard() {
                             {editable === index ? (
                               <input
                                 type="text"
-                                value={updatedTitles[index] || item.title}
+                                value={updatedTitles[(currentPage - 1) * itemsPage + index] || item.title}
                                 onChange={(event) => handleInputChange(event, index)}
-                                key={index}
-                                onBlur={() => handleBlur()}
+                                key={index}                                
                                 autoFocus
                                 className="form-control"
                               />
