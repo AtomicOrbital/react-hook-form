@@ -69,11 +69,11 @@ function ConfirmCard() {
 
   const Pagination = () => {
     const maxPagesToShow = 10;
-    const pages = [];
+    const arrayPages = [];
     const firstPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     const lastPage = Math.min(totalPages, firstPage + maxPagesToShow - 1);
     for (let i = firstPage; i <= lastPage; i++) {
-      pages.push(
+      arrayPages.push(
         <li key={i} className={`page-item ${currentPage === i ? "active" : ""}`}>
           <a className="page-link" href="#"
             onClick={(e) => {
@@ -90,14 +90,22 @@ function ConfirmCard() {
       <nav className="d-flex justify-content-center" aria-label="Page navigation example">
         <ul className="pagination">
           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-            <a className="page-link" href="#" aria-label="Previous" onClick={(e) => { e.preventDefault(); if (currentPage > 1) handlePageChange(currentPage - 1) }}>
+            <a className="page-link" href="#" aria-label="Previous"
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage > 1) handlePageChange(currentPage - 1)
+              }}>
               <span aria-hidden="true">&laquo;</span>
               <span className="sr-only">Previous</span>
             </a>
           </li>
-          {pages}
+          {arrayPages}
           <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-            <a className="page-link" href="#" aria-label="Next" onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) handlePageChange(currentPage + 1) }}>
+            <a className="page-link" href="#" aria-label="Next"
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) handlePageChange(currentPage + 1)
+              }}>
               <span aria-hidden="true">&raquo;</span>
               <span className="sr-only">Next</span>
             </a>
@@ -153,25 +161,25 @@ function ConfirmCard() {
                   </tbody>
                 </table>
                 <div>
-                <div className="d-flex justify-content-end">
-                  <button
-                    style={{ marginRight: '30px' }}
-                    className={`btn btn btn-outline-success`}
-                    disabled={Object.keys(updatedTitles).length === 0}
-                    onClick={handleConfirmUpdate}
-                  >
-                    Confirm Update
-                  </button>
-                  <button
-                    className={`btn btn-outline-danger`}
-                    disabled={Object.keys(updatedTitles).length === 0}
-                    onClick={handleReset}
-                  >
-                    Reset
-                  </button>
+                  <div className="d-flex justify-content-end">
+                    <button
+                      style={{ marginRight: '30px' }}
+                      className={`btn btn btn-outline-success`}
+                      disabled={Object.keys(updatedTitles).length === 0}
+                      onClick={handleConfirmUpdate}
+                    >
+                      Confirm Update
+                    </button>
+                    <button
+                      className={`btn btn-outline-danger`}
+                      disabled={Object.keys(updatedTitles).length === 0}
+                      onClick={handleReset}
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </div>
-                </div>
-                
+
                 <div className="mt-4">
                   <Pagination />
                 </div>
