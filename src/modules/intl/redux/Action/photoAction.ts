@@ -13,7 +13,7 @@ export interface Photo {
     id: number;
     title: string;
     url: string,
-    thumbnaiUrl: string;
+    thumbnailUrl: string;
 }
 
 export interface UpdateTitles {

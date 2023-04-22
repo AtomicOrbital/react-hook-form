@@ -7,8 +7,6 @@ import {
 } from "../../intl/redux/Action/photoAction";
 import { PhotoState } from "../../intl/redux/photoReducer";
 
-
-
 interface UpdatedTitles {
   [key: number]: string;
 }
@@ -18,6 +16,8 @@ function ConfirmCard() {
   const { photos, loading } = useSelector((state): { photoReducer: PhotoState } => state.photoReducer);
   const [updatedTitles, setUpdatedTitles] = useState<UpdatedTitles>({});
   const [editable, setEditable] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     dispatch(fetchPhotos());
@@ -34,13 +34,14 @@ function ConfirmCard() {
     setEditable(index);
   };
 
-  // const handleBlur = () => {
-  //   setEditable(null);
-  // };
+  const handleBlur = () => {
+    setEditable(null);
+  };
 
   const handleConfirmUpdate = () => {
     dispatch(updatePhotoTitles(updatedTitles));
     setUpdatedTitles({});
+    setEditable(null);
   };
 
   const handleReset = () => {
@@ -50,6 +51,59 @@ function ConfirmCard() {
         obj[index] = item.title;
         return obj;
       }, {})
+    );
+    setEditable(null);
+  };
+
+  const totalPages = Math.ceil(photos.length / itemsPerPage);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = photos.slice(indexOfFirstItem, indexOfLastItem);
+
+  const Pagination = () => {
+    const maxPagesToShow = 10;
+    const pages = [];
+    const firstPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    const lastPage = Math.min(totalPages, firstPage + maxPagesToShow - 1);
+    for (let i = firstPage; i <= lastPage; i++) {
+      pages.push(
+        <li key={i} className={`page-item ${currentPage === i ? "active" : ""}`}>
+          <a className="page-link" href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handlePageChange(i);
+            }}>
+            {i}
+          </a>
+        </li>
+      );
+    }
+
+    return (
+      <nav className="d-flex justify-content-center" aria-label="Page navigation example">
+        <ul className="pagination">
+          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+            <a className="page-link" href="#" aria-label="Previous" onClick={(e) => { e.preventDefault(); if (currentPage > 1) handlePageChange(currentPage - 1) }}>
+              <span aria-hidden="true">&laquo;</span>
+              <span className="sr-only">Previous</span>
+            </a>
+          </li>
+          {pages}
+          <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+            <a className="page-link" href="#" aria-label="Next" onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) handlePageChange(currentPage + 1) }}>
+              <span aria-hidden="true">&raquo;</span>
+              <span className="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     );
   };
 
@@ -74,7 +128,7 @@ function ConfirmCard() {
                         <td colSpan={3}>LOADING...</td>
                       </tr>
                     ) : (
-                      photos.map((item: any, index: number) => (
+                      currentItems.map((item: any, index: number) => (
                         <tr key={index} className={`${index % 2 === 0 ? "table-secondary" : ""}`}>
                           <td><img src={item.thumbnailUrl} alt={item.title} className="img-thumbnail" /></td>
                           <td>
@@ -83,7 +137,8 @@ function ConfirmCard() {
                                 type="text"
                                 value={updatedTitles[index] || item.title}
                                 onChange={(event) => handleInputChange(event, index)}
-                                // onBlur={() => handleBlur()}
+                                key={index}
+                                onBlur={() => handleBlur()}
                                 autoFocus
                                 className="form-control"
                               />
@@ -97,22 +152,28 @@ function ConfirmCard() {
                     )}
                   </tbody>
                 </table>
+                <div>
                 <div className="d-flex justify-content-end">
                   <button
                     style={{ marginRight: '30px' }}
-                    className="btn btn-primary"
+                    className={`btn btn btn-outline-success`}
                     disabled={Object.keys(updatedTitles).length === 0}
                     onClick={handleConfirmUpdate}
                   >
                     Confirm Update
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className={`btn btn-outline-danger`}
                     disabled={Object.keys(updatedTitles).length === 0}
                     onClick={handleReset}
                   >
                     Reset
                   </button>
+                </div>
+                </div>
+                
+                <div className="mt-4">
+                  <Pagination />
                 </div>
               </div>
             </div>
@@ -124,3 +185,4 @@ function ConfirmCard() {
 }
 
 export default memo(ConfirmCard);
+

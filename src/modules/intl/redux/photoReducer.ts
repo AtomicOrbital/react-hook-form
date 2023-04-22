@@ -49,6 +49,7 @@ const photoReducer = (state = initialState, action: any) => {
       return { ...state, photos: updatedPhotos };
     case RESET_PHOTO_TITLES:
       console.log("action", action.payload)
+      state.photos = action.payload
       return { ...state, photos: action.payload };
     default:
       return state;
