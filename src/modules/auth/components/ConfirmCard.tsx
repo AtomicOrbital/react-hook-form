@@ -5,7 +5,7 @@ import {
   updatePhotoTitles,
   resetPhotoTitles,
 } from "../../intl/redux/Action/photoAction";
-import { PhotoState } from "../../intl/redux/photoReducer";
+import { AppState } from "../../../redux/reducer";
 
 interface UpdatedTitles {
   [key: number]: string;
@@ -13,7 +13,7 @@ interface UpdatedTitles {
 
 function ConfirmCard() {
   const dispatch = useDispatch();
-  const { photos, loading } = useSelector((state): { photoReducer: PhotoState } => state.photoReducer);
+  const { photos, loading } = useSelector((state : AppState) => state.photoReducer);
   const [updatedTitles, setUpdatedTitles] = useState<UpdatedTitles>({});
   const [editable, setEditable] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
