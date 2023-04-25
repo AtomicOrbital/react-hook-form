@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './scss/Table.module.css';
 import moment from 'moment'
+import { DataItem } from './TableComponent';
 interface FilterComponentProps {
     onFilter: (params: {
         searchTerm: string;
@@ -8,6 +9,7 @@ interface FilterComponentProps {
         startDate: Date | null;
         endDate: Date | null;
     }) => void;
+    data: DataItem[];
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({ onFilter }) => {
@@ -67,8 +69,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilter }) => {
             >
                 <option value="">Status</option>
                 <option value="Pending">Pending</option>
-                <option value="Fulfilled">Fulfilled</option>
+                <option value="Fullfilled">Fullfilled</option>
                 <option value="Processing">Processing</option>
+                <option value="Completed">Completed</option>
+                <option value="Failed">Failed</option>
+                <option value="Received">Received</option>
             </select>
             <input
                 type="date"
@@ -82,13 +87,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ onFilter }) => {
             <input
                 type="date"
                 name="endDate"
-                className="form-control"
+                className="form-control mb-2"
                 value={endDate ? moment(endDate).format('YYYY-MM-DD') : ''}
                 onChange={handleInputChange}
                 placeholder="End Date"
             />
 
-            <button className="btn btn-primary" onClick={handleApplyFilter}>
+            <button className="btn btn-primary mb-2" onClick={handleApplyFilter}>
                 Apply
             </button>
         </div>

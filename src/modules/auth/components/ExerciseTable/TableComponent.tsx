@@ -8,13 +8,23 @@ import { updateData, deleteData } from "../../../intl/redux/Action/tableAction";
 import FilterComponent from './FilterComponent';
 import moment from 'moment';
 
+export interface DataItem {
+    id: number,
+    status: string,
+    date: string,
+    client: string,
+    currency: string,
+    total: number
+}
+
+
 const TableComponent = () => {
     const dispatch = useDispatch();
     const { data } = useSelector((state) => state.tableReducer);
     const [filteredData, setFilteredData] = useState([]);
     const [sortDirection, setSortDirection] = useState("asc");
     const [selectedData, setSelectedData] = useState(null);
-    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState<DataItem | null>(null);
     const [showEditDataModal, setShowEditDataModal] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -115,7 +125,7 @@ const TableComponent = () => {
     };
 
     const handleSortByTotal = () => {
-        const sortedData = [...filteredData].sort((a, b) => {
+        const sortedData = [...filteredData].sort((a: DataItem, b: DataItem) => {
             if (sortDirection === "asc") {
                 return a.total - b.total;
             } else {
@@ -127,17 +137,17 @@ const TableComponent = () => {
         setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     };
 
-    const handleRowClick = (rowData) => {
+    const handleRowClick = (rowData: DataItem) => {
         setSelectedData(rowData);
         setShowEditDataModal(true);
     };
 
-    const handleDeleteClick = (rowData) => {
+    const handleDeleteClick = (rowData: DataItem) => {
         setSelectedData(rowData);
         setShowConfirmModal(true);
     };
 
-    const handleUpdateData = (updatedData) => {
+    const handleUpdateData = (updatedData: DataItem) => {
         setShowEditDataModal(false);
         dispatch(updateData(updatedData));
     };
@@ -181,27 +191,27 @@ const TableComponent = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentItems.map((row) => (
-                            <tr key={row.id}>
-                                <td className={styles[row.status.toLowerCase()]}>
-                                    {row.status}
+                        {currentItems.map((item: DataItem) => (
+                            <tr key={item.id}>
+                                <td className={styles[item.status.toLowerCase()]}>
+                                    {item.status}
                                 </td>
-                                <td>{row.date}</td>
-                                <td>{row.client}</td>
-                                <td>{row.currency}</td>
-                                <td>{row.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
-                                {/* <td>{row.invoiceNumber}</td> */}
+                                <td>{moment(item.date).format('MM-DD-YYYY')}</td>
+                                <td>{item.client}</td>
+                                <td>{item.currency}</td>
+                                <td>{item.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
+                                {/* <td>{item.invoiceNumber}</td> */}
                                 <td>
                                     <button
                                         type="button"
                                         className="btn btn-outline-primary"
-                                        onClick={() => handleRowClick(row)}
+                                        onClick={() => handleRowClick(item)}
                                     >
                                         View Details
                                     </button>
                                 </td>
                                 <td className="text-danger">
-                                    <i className="fa fa-trash" onClick={() => handleDeleteClick(row)}></i>
+                                    <i className="fa fa-trash" onClick={() => handleDeleteClick(item)}></i>
                                 </td>
                             </tr>
                         ))}
