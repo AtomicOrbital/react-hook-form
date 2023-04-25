@@ -3,7 +3,8 @@ import { History } from 'history';
 import { combineReducers } from 'redux';
 import authReducer, { AuthState } from '../modules/auth/redux/authReducer';
 import intlReducer, { IntlState } from '../modules/intl/redux/intlReducer';
-import photoReducer, { PhotoState } from '../modules/intl/redux/photoReducer';
+import photoReducer, { PhotoState } from '../modules/intl/redux/Reducers/photoReducer';
+import tableReducer from '../modules/intl/redux/Reducers/tableReducer';
 
 export interface AppState {
   router: RouterState;
@@ -18,6 +19,7 @@ export default function createRootReducer(history: History) {
     router: connectRouter(history),
     intl: intlReducer,
     profile: authReducer,
-    photoReducer
+    photoReducer,
+    tableReducer
   });
 }

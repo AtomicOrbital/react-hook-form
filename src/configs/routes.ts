@@ -4,5 +4,6 @@ export const ROUTES = {
   login: '/login',
   loginV2: '/loginv2',
   signup: '/signup',
-  card: '/card'
+  card: '/card',
+  table: '/table'
 };

@@ -1,11 +1,11 @@
-import { FetchPhotosFailureAction, FetchPhotosRequestAction, FetchPhotosSuccessAction, ResetPhotoTitlesAction, UpdatePhotoTitlesAction } from "./Action/photoAction";
+import { FetchPhotosFailureAction, FetchPhotosRequestAction, FetchPhotosSuccessAction, ResetPhotoTitlesAction, UpdatePhotoTitlesAction } from "../Action/photoAction";
 import {
   FETCH_PHOTOS_REQUEST,
   FETCH_PHOTOS_SUCCESS,
   FETCH_PHOTOS_FAILURE,
   UPDATE_PHOTO_TITLES,
   RESET_PHOTO_TITLES,
-} from "./Types/photoCardType";
+} from "../Types/photoCardType";
 
 const initialState = {
   photos: [],

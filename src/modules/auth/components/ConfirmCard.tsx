@@ -13,7 +13,7 @@ interface UpdatedTitles {
 
 function ConfirmCard() {
   const dispatch = useDispatch();
-  const { photos, loading } = useSelector((state : AppState) => state.photoReducer);
+  const { photos, loading } = useSelector((state: AppState) => state.photoReducer);
   const [updatedTitles, setUpdatedTitles] = useState<UpdatedTitles>({});
   const [editable, setEditable] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,7 @@ function ConfirmCard() {
     dispatch(fetchPhotos());
   }, [dispatch]);
 
-  
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const globalIndex = (currentPage - 1) * itemsPage + index;
     setUpdatedTitles({
@@ -146,7 +146,7 @@ function ConfirmCard() {
                                 type="text"
                                 value={updatedTitles[(currentPage - 1) * itemsPage + index] || item.title}
                                 onChange={(event) => handleInputChange(event, index)}
-                                key={index}                                
+                                key={index}
                                 autoFocus
                                 className="form-control"
                               />
@@ -179,7 +179,6 @@ function ConfirmCard() {
                     </button>
                   </div>
                 </div>
-
                 <div className="mt-4">
                   <Pagination />
                 </div>
