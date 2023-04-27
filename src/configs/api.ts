@@ -23,6 +23,6 @@ export const API_PATHS = {
   signUp: `${getBaseUrl(APIService.auth)}/register`,
   userProfile: `${getBaseUrl(APIService.public)}/user`,
   getLocation: `${getBaseUrl(APIService.public)}/location`,
-  
+  data: `${getBaseUrl(APIService.public)}/product`
   
 };

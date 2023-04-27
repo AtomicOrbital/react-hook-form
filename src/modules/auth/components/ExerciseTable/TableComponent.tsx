@@ -20,7 +20,7 @@ export interface DataItem {
 
 const TableComponent = () => {
     const dispatch = useDispatch();
-    const { data } = useSelector((state) => state.tableReducer);
+    const { data } = useSelector((state: any) => state.tableReducer);
     const [filteredData, setFilteredData] = useState([]);
     const [sortDirection, setSortDirection] = useState("asc");
     const [selectedData, setSelectedData] = useState(null);
@@ -137,17 +137,17 @@ const TableComponent = () => {
         setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     };
 
-    const handleRowClick = (rowData: DataItem) => {
+    const handleRowClick = (rowData: any) => {
         setSelectedData(rowData);
         setShowEditDataModal(true);
     };
 
-    const handleDeleteClick = (rowData: DataItem) => {
+    const handleDeleteClick = (rowData: any) => {
         setSelectedData(rowData);
         setShowConfirmModal(true);
     };
 
-    const handleUpdateData = (updatedData: DataItem) => {
+    const handleUpdateData = (updatedData: any) => {
         setShowEditDataModal(false);
         dispatch(updateData(updatedData));
     };
@@ -172,7 +172,7 @@ const TableComponent = () => {
                 <EditDataModal
                     data={selectedData}
                     onCancel={handleCancel}
-                    onUpdate={handleUpdateData}
+                    onUpdate={(updatedData: any) => dispatch(updateData(updatedData))}
                 />
             )}
             <FilterComponent onFilter={handleFilter} />
@@ -191,8 +191,8 @@ const TableComponent = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentItems.map((item: DataItem) => (
-                            <tr key={item.id}>
+                        {currentItems.map((item: DataItem, index) => (
+                            <tr key={index}>
                                 <td className={styles[item.status.toLowerCase()]}>
                                     {item.status}
                                 </td>

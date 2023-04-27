@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+
 
 interface EditDataModalProps {
   data: any;
@@ -8,14 +11,18 @@ interface EditDataModalProps {
 
 const EditDataModal: React.FC<EditDataModalProps> = ({ data, onCancel, onUpdate }) => {
   const [updatedData, setUpdatedData] = useState(data);
-
+  const dispatch = useDispatch();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("value", e.target.value);
+    console.log("valueName", e.target.name);
     const { name, value } = e.target;
-    setUpdatedData({ ...updatedData, [name]: value });
+    const { id, fundingMethod, order, status, total, currency } = updatedData;
+      setUpdatedData({ id, fundingMethod,order, status, total, currency, [name]: value });
   };
 
   const handleSubmit = () => {
     onUpdate(updatedData);
+    console.log("updatedData", updatedData);
   };
 
   return (
@@ -26,12 +33,12 @@ const EditDataModal: React.FC<EditDataModalProps> = ({ data, onCancel, onUpdate 
             <h5 className="modal-title">Edit Data</h5>
             <button type="button" className="btn-close" aria-label="Close" onClick={onCancel}></button>
           </div>
-          <div className="modal-body"> 
+          <div className="modal-body">
             <input
               type="text"
-              name="client"
+              name="status"
               className="form-control"
-              value={updatedData.client}
+              value={updatedData.status}
               onChange={handleInputChange}
             />
           </div>

@@ -12,11 +12,13 @@ const tableReducer = (state = initialState, action: any) => {
             state.data = action.payload;
             return { ...state };
         case UPDATE_TABLE_DATA:
+            console.log("update data", action.payload);
+            
             return {
                 ...state,
-                data: state.data.map((item: any) =>
-                    item.id === action.payload.id ? action.payload : item
-                ),
+                // data: state.data.map((item: any) =>
+                //     item.id === action.payload.id ? action.payload : item
+                // ),
             };
         case DELETE_TABLE_DATA:
             state.data = state.data.filter((item: any) => item.id !== action.payload)

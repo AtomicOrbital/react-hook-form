@@ -5,12 +5,14 @@ import authReducer, { AuthState } from '../modules/auth/redux/authReducer';
 import intlReducer, { IntlState } from '../modules/intl/redux/intlReducer';
 import photoReducer, { PhotoState } from '../modules/intl/redux/Reducers/photoReducer';
 import tableReducer from '../modules/intl/redux/Reducers/tableReducer';
+import { DataItem } from '../modules/auth/components/ExerciseTable/TableComponent';
 
 export interface AppState {
   router: RouterState;
   intl: IntlState;
   profile: AuthState;
   photoReducer: PhotoState; 
+  tableReducer: DataItem
 }
 
 

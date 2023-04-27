@@ -5,5 +5,7 @@ export const ROUTES = {
   loginV2: '/loginv2',
   signup: '/signup',
   card: '/card',
-  table: '/table'
+  table: '/table',
+  profile: '/profile',
+  detail: '/detail-page',
 };
